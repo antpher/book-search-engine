@@ -5,8 +5,11 @@ import SavedBooks from './pages/SavedBooks';
 import Navbar from './components/Navbar';
 import {
   ApolloClient,
-  ApolloProvider
+  ApolloProvider,
+  createHttpLink,
+  InMemoryCache
 } from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
 
 const httpLink = createHttpLink({
   uri: '/graphql',
@@ -24,6 +27,7 @@ const authLink = setContext((_, { headers }) => {
 
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
+  cache: new InMemoryCache()
 });
 
 function App() {
